@@ -2,6 +2,7 @@ import speech_recognition as sr
 import pyttsx3
 import espeak
 import ffmpeg
+import pyaudio
 import datetime
 import wikipedia
 import webbrowser
@@ -16,7 +17,6 @@ from selenium import webdriver #controls browser operationms
 
 output = ""
 engine = pyttsx3.init()
-
 
 def talk():
   input = sr.Recognizer()
@@ -42,8 +42,6 @@ def respond(response):
   playsound.playsound(file, True)
   os.remove(file)
 
-
-
 def response(input, output):
  
   if __name__ == '__main__':
@@ -56,20 +54,20 @@ def response(input, output):
     if text == 0:
       talk()
 ###############################
-    # if "goodbye" in str(text):
-    #   respond ("Remember, never put passion in front of principle, even if you win, you lose. Goodbye")
-    #   break
+    if "goodbye" in str(text):
+      respond ("Remember, never put passion in front of principle, even if you win, you lose. Goodbye")
+      break
 #################################
-    # if "wikipedia" in text:
-    #   respond('Searching Wikipedia')  
-    #   text = text.replace('wikipedia', '')
-    #   results = wikipedia.summary(text, sentences=5)
-    #   print(results)
-    #   respond(results)
+    if "wikipedia" in text:
+      respond('Searching Wikipedia')  
+      text = text.replace('wikipedia', '')
+      results = wikipedia.summary(text, sentences=5)
+      print(results)
+      respond(results)
 ###################################
-    # elif 'time' in text:
-    #   strTime = datetime.datetime.now().strftime("%H:%M:%S")
-    #   respond(f'The time is {strTime} kodomo')
+    elif 'time' in text:
+      strTime = datetime.datetime.now().strftime("%H:%M:%S")
+      respond(f'The time is {strTime} kodomo')
 ####################################
     # elif 'find' in text:
     #   question = talk()
@@ -92,10 +90,10 @@ def response(input, output):
     # elif 'what can I do' in text:
     #   respond('I can fetch information for you, perform mathematical calculation, open applications, get weather details.')
 ###################################
-    # elif 'open google' in text:
-    #   webbrowser.open_new_tab('https://www.google.com')
-    #   respond('Google is now open')
-    #   time.sleep(5)
+    elif 'open google' in text:
+      webbrowser.open_new_tab('https://www.google.com')
+      respond('Google is now open')
+      time.sleep(5)
 ####################################
 # responds application not available
     # elif 'open duck duck go' in text:
