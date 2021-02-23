@@ -1,18 +1,22 @@
 import speech_recognition as sr 
+import pyttsx3
+import espeak
+import ffmpeg
 import datetime
 import wikipedia
 import webbrowser
 import time
 import requests
 import subprocess #proces sys command aka log-off etc
-import ecapture #camera
+# import ecapture #camera
 import playsound #audio feedback
-from gtts import gTTS #text2speech 
 import os #save/open files
-import wolframalpha #calc strings into formulas
+# import wolframalpha #calc strings into formulas
 from selenium import webdriver #controls browser operationms
 
 output = ""
+engine = pyttsx3.init()
+
 
 def talk():
   input = sr.Recognizer()
@@ -31,7 +35,7 @@ def respond(response):
   num = 0
   print(output)
   num += 1
-  response = gTTS(text = response, lang = "en") # pylint: disable=not-callable
+  response = pyttsx3(text = response, lang = "en") # pylint: disable=not-callable
   file = str(num) + ".mp3"
   response.save(file)
 
@@ -51,22 +55,22 @@ def response(input, output):
 
     if text == 0:
       talk()
-
-    if "goodbye" in str(text):
-      respond ("Remember, never put passion in front of principle, even if you win, you lose. Goodbye")
-      break
-
-    if "wikipedia" in text:
-      respond('Searching Wikipedia')  
-      text = text.replace('wikipedia', '')
-      results = wikipedia.summary(text, sentences=5)
-      print(results)
-      respond(results)
-
-    elif 'time' in text:
-      strTime = datetime.datetime.now().strftime("%H:%M:%S")
-      respond(f'The time is {strTime} kodomo')
-
+###############################
+    # if "goodbye" in str(text):
+    #   respond ("Remember, never put passion in front of principle, even if you win, you lose. Goodbye")
+    #   break
+#################################
+    # if "wikipedia" in text:
+    #   respond('Searching Wikipedia')  
+    #   text = text.replace('wikipedia', '')
+    #   results = wikipedia.summary(text, sentences=5)
+    #   print(results)
+    #   respond(results)
+###################################
+    # elif 'time' in text:
+    #   strTime = datetime.datetime.now().strftime("%H:%M:%S")
+    #   respond(f'The time is {strTime} kodomo')
+####################################
     # elif 'find' in text:
     #   question = talk()
     #   text = text.replace('search', '')
@@ -87,12 +91,12 @@ def response(input, output):
 # responds application not available
     # elif 'what can I do' in text:
     #   respond('I can fetch information for you, perform mathematical calculation, open applications, get weather details.')
-
-    elif 'open google' in text:
-      webbrowser.open_new_tab('https://www.google.com')
-      respond('Google is now open')
-      time.sleep(5)
-
+###################################
+    # elif 'open google' in text:
+    #   webbrowser.open_new_tab('https://www.google.com')
+    #   respond('Google is now open')
+    #   time.sleep(5)
+####################################
 # responds application not available
     # elif 'open duck duck go' in text:
     #   webbrowser.open_new_tab('https://www.duckduckgo.com')
